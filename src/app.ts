@@ -22,15 +22,6 @@ const app = express();
 const graphqlServer = connectGraphQL();
 await graphqlServer.start();
 
-app.use((req, res, next) => {
-  console.log("Request Body:", req.body);
-  next();
-});
-app.use((req, res, next) => {
-  console.log("Request Headers:", req.headers);
-  next();
-});
-
 // app.use(
 //   helmet({
 //     contentSecurityPolicy: envMode !== "DEVELOPMENT",
