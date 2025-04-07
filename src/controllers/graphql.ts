@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "../models/user";
 import { log } from "console";
+import { Context } from "../graphql/graphql";
 
 export const helloWord = () => "Hello, World!";
 
@@ -18,7 +19,12 @@ export const getUsers = async () => {
   return user;
 };
 
-export const GetUsersId = async (parent: any, arg: { id: String }) => {
+export const GetUsersId = async (
+  parent: any,
+  arg: { id: String },
+  context: Context
+) => {
+  console.log(context);
   return await User.findById(arg.id);
 };
 

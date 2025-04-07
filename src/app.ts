@@ -1,6 +1,6 @@
 import express from "express";
 import helmet from "helmet";
-import { connectGraphQL } from "./graphql/graphql.js";
+import { connectGraphQL, Context } from "./graphql/graphql.js";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
@@ -32,7 +32,17 @@ await graphqlServer.start();
 // app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.use("/graphql", expressMiddleware(graphqlServer));
+// app.use("/graphql", expressMiddleware(graphqlServer,));
+
+app.use(
+  "/graphql",
+  expressMiddleware<Context>(graphqlServer, {
+    context: async () => ({
+      message: "Hello world",
+    }),
+  })
+);
+
 // app.use(cors({ origin: "*", credentials: true }));
 
 // app.use(morgan("dev"));
